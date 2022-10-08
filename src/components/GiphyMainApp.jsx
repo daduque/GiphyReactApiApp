@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getGifs } from '../helpers/getGifs'
 import '../Main.css'
 
@@ -6,6 +6,8 @@ const GiphyMainApp = () => {
 
     const [inputValue, setInputValue] = useState('');
     const [gifs, setGifs] = useState([]);
+    
+    console.log(gifs);
 
     const onFormSubmit = (e) => {
         e.preventDefault();
@@ -13,13 +15,14 @@ const GiphyMainApp = () => {
         if(inputValue.trim().length < 2 || inputValue.trim().length > 50) return;
 
         getGifs(inputValue)
-            .then(imgs => {
-                setGifs(imgs);
-                console.log(gifs);
-            })
+        .then(imgs => {
+            setGifs(imgs);
+        })
+
         
     }
 
+    
     const onInputChange = (e) => {
         setInputValue(e.target.value);
     }
@@ -61,66 +64,21 @@ const GiphyMainApp = () => {
                     <section className='d-flex flex-wrap gap-3 mt-5'>
 
 
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://media3.giphy.com/media/GVaknm5baLdAc/giphy.gif?cid=811962bcw3rol03vqn85c11o9v8yt1w1uu84681ve7tk2zwc&rid=giphy.gif&ct=g" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Tercero de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/arch" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Uno de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/any" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Uno de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/arch" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Uno de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/any" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Uno de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/arch" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Otro de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/tech" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Tercero de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/nature" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Uno de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/people" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Otro de tantos</h5>
-                            </div>
-                        </div>
-                        <div className="card" style={{width: "18rem"}}>
-                            <img src="https://placeimg.com/200/200/tech" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title text-dark">Tercero de tantos</h5>
-                            </div>
-                        </div>
+                        {
+                            gifs && gifs.length > 0 &&
+                            gifs.map( (gif, index) => (
+
+                                <div key={ gif.id } className="card" style={{ width: "18rem" }}>
+                                    <img src={ gif.url } className="card-img-top" />
+                                    <div className="card-body">
+                                        <h5 className="card-title text-dark"> { gif.title } </h5>
+                                    </div>
+                                </div>
+
+
+                            ))
+                        }
+                        
 
                     </section>
                 </section>
